@@ -9,16 +9,12 @@ public class Function {
     @FunctionName("produce")
     public static String produce(
         @TimerTrigger(name = "schedule", schedule = "0 */1 * * * *") String timerInfo,
-	@BlobInput(name = "blob", connection = "AzureWebJobsStorage", dataType = "binary", path = "input/config.json") byte[] myblob,
+	@BlobInput(name = "blob", connection = "AzureWebJobsStorage", dataType = "string", path = "input/config.json") String myblob,
         @QueueOutput(name = "message", queueName = "myqueue", connection = "AzureWebJobsStorage") OutputBinding<String> queue,
         final ExecutionContext context) {
 
-	// read message
-	String value = new String(myblob);
-
 	// queue a message
-	String message = value;
-	queue.setValue(message);
+	queue.setValue(myblob);
 
 	// return
 	context.getLogger().info("queued: " + message); 
