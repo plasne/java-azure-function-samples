@@ -23,6 +23,22 @@ According to the enumeration you could get a stream as well, but I have not got 
   * Runs whenever a new message is found in the Azure Storage Queue
   * Writes the message to the logger
 
+## Write multiple queue items
+
+The below is an example of outputting multiple items to a queue.
+
+```bash
+@FunctionName("produce")
+public static String produce(
+    @TimerTrigger(name = "schedule", schedule = "0 */1 * * * *") String timerInfo,
+    @QueueOutput(name = "message", queueName = "myqueue", connection = "AzureWebJobsStorage") OutputBinding<String[]> queue,
+    final ExecutionContext context) {
+        String[] messages = {"message1", "message2", "message3"};
+        queue.setValue(messages);
+        return "done";
+    }
+```
+
 ## Configuration
 
 The "local.settings.json" file must be modified such that "AzureWebJobsStorage" contains a connection string to a Blob Storage Account.
