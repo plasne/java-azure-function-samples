@@ -3,11 +3,13 @@ package com.plasne.functions;
 import java.util.*;
 import com.microsoft.azure.serverless.functions.annotation.*;
 import com.microsoft.azure.serverless.functions.*;
+import com.microsoft.azure.keyvault.KeyVaultClient;
+import com.microsoft.azure.keyvault.models.SecretBundle;
 
 public class Function {
 
     @FunctionName("secret")
-    public static String secret(
+    public static HttpResponseMessage<String> secret(
         @HttpTrigger(name = "req", methods = {"get"}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
         final ExecutionContext context) {
 
