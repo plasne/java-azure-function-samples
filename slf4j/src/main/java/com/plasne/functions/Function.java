@@ -3,11 +3,12 @@ package com.plasne.functions;
 import java.util.*;
 import com.microsoft.azure.serverless.functions.annotation.*;
 import com.microsoft.azure.serverless.functions.*;
+import org.slf4j.LoggerFactory;
 
 public class Function {
 
     @FunctionName("hello")
-    public static String produce(
+    public static HttpResponseMessage<String> produce(
         @HttpTrigger(name = "req", methods = {"get"}, authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
         final ExecutionContext context) {
 
